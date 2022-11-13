@@ -1,0 +1,3 @@
+#!/bin/bash
+
+n=`date +%s`; u=`cut -d. -f1 /proc/uptime`; date +%Y%m%d.%H%M -d @`echo $n - $u| bc`
