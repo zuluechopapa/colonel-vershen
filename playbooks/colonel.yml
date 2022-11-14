@@ -1,0 +1,17 @@
+---
+- name: kvlb
+  hosts: all
+  become: True
+  
+  tasks:
+  - name: kvlb-run
+    shell: "echo -n kv: ; uname -r ; echo -n lb:; n=`date +%s`; u=`cut -d. -f1 /proc/uptime`; date +%Y%m%d.%H%M -d @`echo $n - $u| bc`"
+    register: output
+  - name: copyout
+    copy:
+      content: "{{ output.stdout }}"
+      dest: "{{ inventory_hostname }}.kvlb"
+  - name: fetch
+    fetch:
+       src: "{{ inventory_hostname }}.kvlb"
+       dest: /home/zep/git/colonel-vershen/out/
