@@ -1,3 +1,17 @@
 #!/bin/bash
 
-ansible-playbook  playbooks/colonel.yml
+col=/home/zep/git/colonel-vershen
+
+cd  /home/zep/git/ansible-zep.local/
+ansible-playbook  $col/playbooks/colonel.yml
+if [ $? -eq 0 ]
+then
+  find $col/out -name "*kvlb" | xargs cp $col/status
+else
+  echo nonzero exit from ansible
+fi
+
+cd $col
+git add status
+git commit -m "update kvlb files after ansible"
+git push
