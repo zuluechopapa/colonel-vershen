@@ -6,12 +6,13 @@ cd  /home/zep/git/ansible-zep.local/
 ansible-playbook  $col/playbooks/colonel.yml
 if [ $? -eq 0 ]
 then
-  find $col/out -name "*kvlb" | xargs cp $col/status
+  #find $col/out -name "*kvlb" | xargs cp $col/stat
+  find $col/out -name "*kvlb" -exec cp {} $col/stat \;
 else
   echo nonzero exit from ansible
 fi
 
 cd $col
-git add status
+git add stat
 git commit -m "update kvlb files after ansible"
 git push
